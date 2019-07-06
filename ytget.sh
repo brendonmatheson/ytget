@@ -41,6 +41,7 @@ echo "Selected audio stream $audioId"
 # Find the best video stream
 videoId=$(cat $key"_streams" | \
 	grep -e "video only" | \
+	grep -v "vp9" | \
 	awk '{gsub("k", "", $5); print $5 " " $1 }' | \
 	sort -n -r | \
 	head -n 1 | \
