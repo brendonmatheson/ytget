@@ -24,6 +24,12 @@ title=$(youtube-dl --skip-download --get-title --no-warnings $videoUrl | sed 2d)
 title=$(echo $title | sed -e "s/[\/'\"]/-/g")	# Make the title filename friendly
 echo "Video title $title"
 
+# Get the video's date
+echo "Getitng video date for $videoUrl"
+date=$(youtube-dl --skip-download --print-json $videoUrl | jq -r ".upload_date")
+date=$(echo $date | cut -c1-4)-$(echo $date | cut -c5-6)-$(echo $date | cut -c7-8)
+echo "Video date $date"
+
 # Get the video stream info
 echo "Getting stream info for $videoUrl"
 youtube-dl -F $videoUrl > $key"_streams"
@@ -58,7 +64,8 @@ echo "Retrieving video stream"
 youtube-dl -f $videoId $videoUrl -o $key"_video"
 
 # Encode to MP4
-ffmpeg -i $key"_audio" -i $key"_video" -c:v copy -c:a aac -y "$title.mp4"
+echo ffmpeg -i $key"_audio" -i $key"_video" -c:v copy -c:a aac -y "$date - $title.mp4"
+ffmpeg -i $key"_audio" -i $key"_video" -c:v copy -c:a aac -y "$date - $title.mp4"
 
 # Clean up temp files
 rm $key"_streams"
