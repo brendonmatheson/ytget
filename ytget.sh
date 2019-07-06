@@ -48,6 +48,7 @@ echo "Selected audio stream $audioId"
 videoId=$(cat $key"_streams" | \
 	grep -e "video only" | \
 	grep -v "vp9" | \
+	sed 's/DASH//g' | \
 	awk '{gsub("k", "", $5); print $5 " " $1 }' | \
 	sort -n -r | \
 	head -n 1 | \
