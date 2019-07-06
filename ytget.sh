@@ -31,20 +31,20 @@ youtube-dl -F $videoUrl > $key"_streams"
 # Find the best audio stream
 audioId=$(cat $key"_streams" | \
 	grep -e "audio only" | \
-	awk -e '{gsub("k", "", $7); print $7 " " $1 }' | \
+	awk '{gsub("k", "", $7); print $7 " " $1 }' | \
 	sort -n -r | \
 	head -n 1 | \
-	awk -e '{ print $2 }')
+	awk '{ print $2 }')
 
 echo "Selected audio stream $audioId"
 
 # Find the best video stream
 videoId=$(cat $key"_streams" | \
 	grep -e "video only" | \
-	awk -e '{gsub("k", "", $5); print $5 " " $1 }' | \
+	awk '{gsub("k", "", $5); print $5 " " $1 }' | \
 	sort -n -r | \
 	head -n 1 | \
-	awk -e '{ print $2 }')
+	awk '{ print $2 }')
 
 echo "Selected video stream $videoId"
 
