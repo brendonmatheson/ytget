@@ -68,6 +68,10 @@ youtube-dl -f $videoId $videoUrl -o $key"_video"
 echo ffmpeg -i $key"_audio" -i $key"_video" -c:v copy -c:a aac -y "$date - $title.mp4"
 ffmpeg -i $key"_audio" -i $key"_video" -c:v copy -c:a aac -y "$date - $title.mp4"
 
+
+# Generate shortcut to the video
+echo "[InternetShortcut]\r" > "$date - $title.url"
+echo "URL=$videoUrl" >> "$date - $title.url"
 # Clean up temp files
 rm $key"_streams"
 rm $key"_audio"
